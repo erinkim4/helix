@@ -284,6 +284,7 @@ impl EditorView {
         let selection_scope = theme
             .find_scope_index("ui.selection")
             .expect("could not find `ui.selection` scope in the theme!");
+
         let base_cursor_scope = theme
             .find_scope_index("ui.cursor")
             .unwrap_or(selection_scope);
@@ -291,13 +292,21 @@ impl EditorView {
         let cursor_scope = match mode {
             Mode::Insert => theme.find_scope_index("ui.cursor.insert"),
             Mode::Select => theme.find_scope_index("ui.cursor.select"),
-            Mode::Normal => Some(base_cursor_scope),
+            Mode::Normal => theme.find_scope_index("ui.cursor"),
         }
         .unwrap_or(base_cursor_scope);
 
-        let primary_cursor_scope = theme
+        let base_primary_cursor_scope = theme
             .find_scope_index("ui.cursor.primary")
-            .unwrap_or(cursor_scope);
+            .unwrap_or(base_cursor_scope);
+
+        let primary_cursor_scope = match mode {
+            Mode::Insert => theme.find_scope_index("ui.cursor.insert.primary"),
+            Mode::Select => theme.find_scope_index("ui.cursor.select.primary"),
+            Mode::Normal => None,
+        }
+        .unwrap_or(base_primary_cursor_scope);
+
         let primary_selection_scope = theme
             .find_scope_index("ui.selection.primary")
             .unwrap_or(selection_scope);
