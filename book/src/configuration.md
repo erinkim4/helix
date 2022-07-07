@@ -37,13 +37,16 @@ hidden = false
 | `scroll-lines` | Number of lines to scroll per scroll wheel step. | `3` |
 | `shell` | Shell to use when running external commands. | Unix: `["sh", "-c"]`<br/>Windows: `["cmd", "/C"]` |
 | `line-number` | Line number display: `absolute` simply shows each line's number, while `relative` shows the distance from the current line. When unfocused or in insert mode, `relative` will still show absolute line numbers. | `absolute` |
+| `cursorline` | Highlight all lines with a cursor. | `false` |
 | `gutters` | Gutters to display: Available are `diagnostics` and `line-numbers`, note that `diagnostics` also includes other features like breakpoints | `["diagnostics", "line-numbers"]` |
 | `auto-completion` | Enable automatic pop up of auto-completion. | `true` |
+| `auto-format` | Enable automatic formatting on save. | `true` |
 | `idle-timeout` | Time in milliseconds since last keypress before idle timers trigger. Used for autocompletion, set to 0 for instant. | `400` |
 | `completion-trigger-len` | The min-length of word under cursor to trigger autocompletion | `2` |
 | `auto-info` | Whether to display infoboxes | `true` |
 | `true-color` | Set to `true` to override automatic detection of terminal truecolor support in the event of a false negative. | `false` |
 | `rulers` | List of column positions at which to display the rulers. Can be overridden by language specific `rulers` in `languages.toml` file. | `[]` |
+| `color-modes` | Whether to color the mode indicator with different colors depending on the mode itself | `false` |
 
 ### `[editor.lsp]` Section
 
@@ -89,16 +92,18 @@ available, which is not defined by default.
 
 ### `[editor.auto-pairs]` Section
 
-Enable automatic insertion of pairs to parentheses, brackets, etc. Can be
-a simple boolean value, or a specific mapping of pairs of single characters.
+Enables automatic insertion of pairs to parentheses, brackets, etc. Can be a
+simple boolean value, or a specific mapping of pairs of single characters.
 
-| Key | Description |
-| --- | ----------- |
-| `false` | Completely disable auto pairing, regardless of language-specific settings
-| `true` | Use the default pairs: <code>(){}[]''""``</code>
-| Mapping of pairs | e.g. `{ "(" =  ")", "{" = "}", ... }`
+To disable auto-pairs altogether, set `auto-pairs` to `false`:
 
-Example
+```toml
+[editor]
+auto-pairs = false # defaults to `true`
+```
+
+The default pairs are <code>(){}[]''""``</code>, but these can be customized by
+setting `auto-pairs` to a TOML table:
 
 ```toml
 [editor.auto-pairs]
@@ -163,4 +168,21 @@ space = "·"
 nbsp = "⍽"
 tab = "→"
 newline = "⏎"
+```
+
+### `[editor.indent-guides]` Section
+
+Options for rendering vertical indent guides.
+
+| Key         | Description                                             | Default |
+| ---         | ---                                                     | ---     |
+| `render`    | Whether to render indent guides.                        | `false` |
+| `character` | Literal character to use for rendering the indent guide | `│`     |
+
+Example:
+
+```toml
+[editor.indent-guides]
+render = true
+character = "╎"
 ```

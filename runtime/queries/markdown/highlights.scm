@@ -8,11 +8,9 @@
 (atx_heading (atx_h5_marker) @markup.heading.marker (heading_content) @markup.heading.5)
 (atx_heading (atx_h6_marker) @markup.heading.marker (heading_content) @markup.heading.6)
 
-(code_fence_content) @none
-
 [
   (indented_code_block)
-  (fenced_code_block)
+  (code_fence_content)
 ] @markup.raw.block
 
 (block_quote) @markup.quote
@@ -26,6 +24,8 @@
 (link_destination) @markup.link.url
 (link_label) @markup.link.label
 
+(info_string) @label
+
 [
   (link_text)
   (image_description)
@@ -35,12 +35,20 @@
   (list_marker_plus)
   (list_marker_minus)
   (list_marker_star)
+] @markup.list.numbered
+
+[
   (list_marker_dot)
   (list_marker_parenthesis)
-] @punctuation.special
+] @markup.list.unnumbered
 
 [
   (backslash_escape)
   (hard_line_break)
-] @string.character.escape
+] @constant.character.escape
 
+(thematic_break) @punctuation.delimiter
+
+(inline_link ["[" "]" "(" ")"] @punctuation.bracket)
+(image ["[" "]" "(" ")"] @punctuation.bracket)
+(fenced_code_block_delimiter) @punctuation.bracket
